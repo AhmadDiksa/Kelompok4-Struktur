@@ -28,3 +28,29 @@ class Map:
             self.daftarkota[kota1].append(kota2)
             return True
         return False
+
+    #fungsi untuk menghapus jalur antara kota 1 dan kota 2
+    def hapusjalur(self,kota1,kota2):
+        if kota1 in self.daftarkota and kota2 in self.daftarkota:
+            #hapus kota 1 di list kota2
+            self.daftarkota[kota2].remove(kota1)
+            #hapus kota 2 di list kota1
+            self.daftarkota[kota1].remove(kota2)
+            return True
+        return False
+        
+    
+    def printMap(self):
+        for kota in self.daftarkota:
+            print(kota, ":",self.daftarkota[kota])
+        
+
+MapKota = Map()
+MapKota.tambahkankota("Surabaya")
+MapKota.tambahkankota("Sidoarjo")
+MapKota.tambahkankota("Gresik")
+MapKota.tambahkankota("Madiun")
+MapKota.tambahkankota("Kediri")
+MapKota.tambahkankota("Lamongan")
+MapKota.tambahkankota("Nganjuk")
+MapKota.tambahkankota("Gresik")
