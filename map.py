@@ -48,7 +48,6 @@ class Map:
 MapKota = Map()
 MapKota.tambahkankota("Surabaya")
 MapKota.tambahkankota("Sidoarjo")
-MapKota.tambahkankota("Gresik")
 MapKota.tambahkankota("Madiun")
 MapKota.tambahkankota("Kediri")
 MapKota.tambahkankota("Lamongan")
