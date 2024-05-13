@@ -91,3 +91,63 @@ class WeightedGraph:
                     distances[neighbor] = distance
 
         return distances
+    
+    def tsp(self):
+        # Initialize variables
+        jarak_terdekat = float('inf')
+        path_terdekat = []
+
+        # generate semua permutation di kota
+        cities = list(self.daftarkota.keys())
+        for path in permutations(cities):
+            # menghitung total jarak dari permutation sebelumnya
+            total_jarak = 0
+            for i in range(len(path) - 1):
+                if path[i] in self.daftarkota and path[i + 1] in self.daftarkota[path[i]]:
+                    total_jarak += self.daftarkota[path[i]][path[i + 1]]
+                else:
+                    total_jarak = float('inf')
+                    #break jika path invalid
+                    break  
+            
+            if total_jarak < jarak_terdekat:
+                jarak_terdekat = total_jarak
+                path_terdekat = path
+
+        return path_terdekat, jarak_terdekat
+
+    def printgraph(self):
+        #mengiterasi setiap city
+        for city in self.daftarkota:
+            #setiap kota print nama kota
+            print(city, ":", self.daftarkota[city])
+
+            # Print jarak
+            for neighbor, distance in self.daftarkota[city].items():
+                #print tetangga dan jarak
+                print("    ->", neighbor, ":", distance)
+
+                
+#inisialisasi map sebagai WeightedGraph
+MapKota = WeightedGraph()
+
+#menambahkan kota
+MapKota.tambahkankota("Surabaya")
+MapKota.tambahkankota("Sidoarjo")
+MapKota.tambahkankota("Gresik")
+MapKota.tambahkankota("Madiun")
+MapKota.tambahkankota("Kediri")
+MapKota.tambahkankota("Lamongan")
+MapKota.tambahkankota("Nganjuk")
+MapKota.tambahkankota("Gresik")
+MapKota.tambahkankota("Malang")
+MapKota.tambahkankota("Mojokerto")
+MapKota.tambahkankota("Pasuruan")
+MapKota.tambahkankota("Probolinggo")
+MapKota.tambahkankota("Ponorogo")
+MapKota.tambahkankota("Blitar")
+MapKota.tambahkankota("Tulungagung")
+MapKota.tambahkankota("Trenggalek")
+MapKota.tambahkankota("Ngawi")
+MapKota.tambahkankota("Bojonegoro")
+MapKota.tambahkankota("Batu")
