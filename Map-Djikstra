@@ -1,0 +1,93 @@
+from itertools import permutations
+
+class WeightedGraph:
+    #initialization
+    def __init__(self):
+        self.daftarkota = {}
+
+    def printgraph(self):
+        #mengiterasi setiap city
+        for city in self.daftarkota:
+            #setiap kota print nama kota
+            print(city, ":", self.daftarkota[city])
+
+            # Print jarak
+            for neighbor, distance in self.daftarkota[city].items():
+                #print tetangga dan jarak
+                print("    ->", neighbor, ":", distance)
+
+    def tambahkankota(self, kota):
+        #jika kota tidak ada di cityList
+        if kota not in self.daftarkota:
+            #maka tambahkan kota
+            self.daftarkota[kota] = {}
+            return True
+        return False
+
+     
+    #Fungsi untuk menghapus sebuah kota
+    def hapuskota(self,kotadihapus):
+        #mengecek apakah kota yang akan dihaous terdapat dalam list
+        if kotadihapus in self.daftarkota:
+            for kota2 in self.daftarkota:
+            #mengecek apakah terdapat jalur ke kota2
+                if kotadihapus in self.daftarkota[kota2]:
+                    self.daftarkota[kota2].remove(kotadihapus)
+            del self.daftarkota[kotadihapus]
+            return True
+        return False
+
+    def tambahkanjalur(self, kota1, kota2, jarak):
+        if kota1 in self.daftarkota and kota2 in self.daftarkota:
+            self.daftarkota[kota1][kota2] = jarak
+            self.daftarkota[kota2][kota1] = jarak
+            return True
+        return False
+
+    def hapusjalur(self, kota1, kota2):
+        if kota1 in self.daftarkota and kota2 in self.daftarkota:
+            if kota2 in self.daftarkota[kota1]:
+                del self.daftarkota[kota1][kota2]
+                del self.daftarkota[kota2][kota1]
+                return True
+        return False
+
+    def dijkstra(self, source):
+        # Initialize distances with infinity
+        #distances = {city: float('inf') for city in self.cityList}
+        
+        distances = {}
+        for city in self.daftarkota:
+            distances[city] = float('inf')
+        
+        distances[source] = 0
+        print (distances)
+        # Initialize list of unvisited cities
+        kota_takterjamah = []
+        for city in self.daftarkota:
+            kota_takterjamah.append(city)
+        #unvisited_cities = list(self.cityList.keys())
+        print (kota_takterjamah)
+
+        while kota_takterjamah:
+            # Find the unvisited city with the smallest distance
+            min_distance = float('inf')
+            kota_terdekat = None
+            #mengiterasi setiap kota yang belum dikunjungi
+            for city in kota_takterjamah:
+                #jika jarak kota lebih kecil dari min_distance
+                if distances[city] < min_distance:
+                    min_distance = distances[city]
+                    kota_terdekat = city
+
+            # Remove the closest city from unvisited list
+            kota_takterjamah.remove(kota_terdekat)
+
+            # Update distances to neighboring cities
+            for neighbor, weight in self.daftarkota[kota_terdekat].items():
+                #jika jarak kota terdekat + weight lebih kecil dari jarak kota tetangga
+                distance = distances[kota_terdekat] + weight
+                if distance < distances[neighbor]:
+                    distances[neighbor] = distance
+
+        return distances
